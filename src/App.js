@@ -1,10 +1,11 @@
 
 import './App.css';
+import Navbar from './Pages/Shared/Navbar';
 
 function App() {
   return (
     <div>
-      <button className='btn btn-primary'>Button</button>
+      <Navbar></Navbar>
     </div>
   );
 }
