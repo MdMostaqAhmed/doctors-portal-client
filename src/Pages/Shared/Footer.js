@@ -5,8 +5,8 @@ const Footer = () => {
     let currentDate = new Date();
     let year = currentDate.getFullYear();
     return (
-        <footer className="p-10" style={{ background: `url(${footer})`, backgroundSize: 'cover' }}>
-            <div className='footer'>
+        <footer className="mt-5" style={{ background: `url(${footer})`, backgroundSize: 'cover' }}>
+            <div className='footer flex justify-around'>
                 <div>
                     <span className="footer-title">Services</span>
                     <a className="link link-hover">Branding</a>
@@ -28,7 +28,7 @@ const Footer = () => {
                     <a className="link link-hover">Cookie policy</a>
                 </div>
             </div>
-            <div className="my-5 text-center">
+            <div className="mt-5 mb-2 text-center">
                 <p>Copyright © {year} - All right reserved</p>
             </div>
         </footer>
