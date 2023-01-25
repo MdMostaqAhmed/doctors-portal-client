@@ -22,7 +22,9 @@ const Login = () => {
     }
 
 
-
+    if (loading || gLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className='flex justify-center items-center h-screen'>
