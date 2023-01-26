@@ -23,10 +23,11 @@ const Login = () => {
     const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
+
         if (user || gUser) {
             navigate(from, { replace: true });
         }
-    }, [user, gUser, location, navigate])
+    }, [user, gUser, from, navigate])
 
     let signInError;
 
@@ -38,7 +39,6 @@ const Login = () => {
     if (loading || gLoading) {
         return <Loading></Loading>
     }
-
 
 
     return (
