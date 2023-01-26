@@ -12,6 +12,9 @@ import SignUp from './Pages/Login/SignUp';
 import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <div className='max-w-7xl mx-auto sm:px-12'>
@@ -25,6 +28,7 @@ function App() {
         <Route path='/signUp' element={<SignUp />} />
       </Routes>
       <Footer></Footer>
+      <ToastContainer />
     </div>
   );
 }

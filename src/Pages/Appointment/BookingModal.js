@@ -6,7 +6,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const BookingModal = ({ treatment, date, setTreatment }) => {
     const { _id, name, slots } = treatment;
     const [user, loading, error] = useAuthState(auth);
-    const formatedDate = format(date, PP)
+    const formatedDate = format(date, 'PP')
+
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
@@ -20,8 +21,22 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             patientName: user.name,
             phone: event.target.phone.value
         }
+
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+            })
         // to close the modal
         setTreatment(null)
+
     }
     return (
         <div>
@@ -41,7 +56,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         <input type="text" name='name' value={user?.displayName || ""} disabled className="input w-full max-w-xs " />
                         {/* <input type="email" name='email' placeholder="Email Address" className="input w-full max-w-xs" /> */}
                         <input type="email" name='email' value={user?.email} disabled className="input w-full max-w-xs" />
-                        <input type="text" name='phone' placeholder="Phone Number" className="input w-full max-w-xs" />
+                        <input type="text" name='phone' placeholder="Phone Number" className="input w-full max-w-xs" defaultChecked />
                         <input type="submit" value='Submit' className="btn btn-secondary input w-full max-w-xs" />
                     </form>
                 </div>
