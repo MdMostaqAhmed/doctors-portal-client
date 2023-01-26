@@ -6,10 +6,21 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const BookingModal = ({ treatment, date, setTreatment }) => {
     const { _id, name, slots } = treatment;
     const [user, loading, error] = useAuthState(auth);
+    const formatedDate = format(date, PP)
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
         console.log(_id, name, slot);
+        const booking = {
+            treatmentId: _id,
+            treatmentName: name,
+            date: formatedDate,
+            slot,
+            patient: user.email,
+            patientName: user.name,
+            phone: event.target.phone.value
+        }
+        // to close the modal
         setTreatment(null)
     }
     return (
