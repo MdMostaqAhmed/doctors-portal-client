@@ -1,29 +1,34 @@
 import React from 'react';
 import auth from '../../firebase.init';
-import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const navigate = useNavigate()
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({ displayName: data.name });
         console.log(data)
-        createUserWithEmailAndPassword(data.email, data.password)
+        navigate('/appointment')
     };
 
     let signInError;
 
-    if (error || gError) {
+    if (error || gError || updateError) {
         signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
     }
 
 
-    if (loading || gLoading) {
+    if (loading || gLoading || updating) {
         return <Loading></Loading>
     }
 
@@ -56,6 +61,7 @@ const SignUp = () => {
 
                             </label>
                         </div>
+
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Email</span>
