@@ -10,6 +10,7 @@ const AvailableAppointments = ({ date }) => {
         fetch('http://localhost:5000/service')
             .then(res => res.json())
             .then(data => setServices(data))
+
     }, [])
     return (
         <div className=''>
