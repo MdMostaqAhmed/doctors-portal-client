@@ -27,3 +27,4 @@ const Service = ({ service, setTreatment }) => {
 };
 
 export default Service;
+
