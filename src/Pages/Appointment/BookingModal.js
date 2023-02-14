@@ -4,23 +4,25 @@ import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
     const { _id, name, slots } = treatment;
     const [user, loading, error] = useAuthState(auth);
-    const formatedDate = format(date, 'PP')
+    const formattedDate = format(date, 'PP')
 
     const handleBooking = event => {
         event.preventDefault();
         const slot = event.target.slot.value;
+        console.log(slot)
         const booking = {
             treatmentId: _id,
-            treatmentName: name,
-            date: formatedDate,
+            treatment: name,
+            date: formattedDate,
             slot,
             patient: user.email,
-            patientName: user.name,
+            patientName: user.displayName,
             phone: event.target.phone.value
         }
+        console.log(booking)
 
         fetch('http://localhost:5000/booking', {
             method: 'POST',
@@ -33,16 +35,16 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             .then(data => {
                 console.log(data);
                 if (data.success) {
-                    toast(`Appointment is set, ${formatedDate} at ${slot}`)
+                    toast(`Appointment is set, ${formattedDate} at ${slot}`)
                 }
                 else {
                     toast.error(`Already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`)
                 }
+                refetch();
                 setTreatment(null)
-
             })
         // to close the modal
-        setTreatment(null)
+        // setTreatment(null)
 
     }
     return (
@@ -52,8 +54,9 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                 <div className="modal-box">
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="font-bold text-lg text-secondary">Booking For: {name}</h3>
+
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 justify-items-center'>
-                        <input type="text" value={format(date, 'PP') || ''} className="input w-full max-w-xs" />
+                        <input type="text" value={format(date, 'PP') || ''} readOnly className="input w-full max-w-xs" />
                         <select name='slot' className="select select-bordered w-full max-w-xs">
                             {
                                 slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
