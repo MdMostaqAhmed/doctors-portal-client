@@ -37,6 +37,7 @@ const Navbar = () => {
                         {
                             user && <li><Link to="/dashboard">Dashboard</Link></li>
                         }
+
                         <li>{user ? <button
                             onClick={async () => {
                                 const success = await signOut();
