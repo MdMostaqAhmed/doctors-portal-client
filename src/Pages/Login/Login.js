@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import useToken from '../../Hooks/useToken';
 
 const Login = () => {
 
@@ -18,16 +19,18 @@ const Login = () => {
         signInWithEmailAndPassword(data.email, data.password)
     };
 
+    const [token] = useToken(user || gUser)
+
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
 
-        if (user || gUser) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [user, gUser, from, navigate])
+    }, [token, from, navigate])
 
     let signInError;
 

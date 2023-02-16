@@ -26,10 +26,7 @@ const MyAppointments = () => {
                         </tr>
                     </thead>
 
-
-
                     <tbody>
-
                         {
                             appointments.map((a, index) => <tr>
                                 <th>{index + 1}</th>
@@ -39,9 +36,6 @@ const MyAppointments = () => {
                                 <td>{a.treatment}</td>
                             </tr>)
                         }
-
-
-
                     </tbody>
                 </table>
             </div>
