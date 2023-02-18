@@ -25,12 +25,14 @@ const Login = () => {
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/";
 
-    useEffect(() => {
 
+
+    useEffect(() => {
         if (token) {
             navigate(from, { replace: true });
         }
-    }, [token, from, navigate])
+    }, [token])
+
 
     let signInError;
 

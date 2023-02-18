@@ -42,6 +42,7 @@ const Navbar = () => {
                         <li>{user ? <button
                             onClick={async () => {
                                 const success = await signOut();
+                                localStorage.removeItem('accessToken')
                                 if (success) {
                                     alert('You are sign out');
                                 }
